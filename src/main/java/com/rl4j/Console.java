@@ -43,6 +43,10 @@ public class Console {
         put(c, column, row, foreground, background);
     }
 
+    public void put(final char c, final int column, final int row, final Color foreground) {
+        put(c, column, row, foreground, background);
+    }
+
     public void put(final char c, final int column, final int row, final Color foreground, final Color background) {
         if (!contains(column, row)) {
             return;
@@ -52,6 +56,10 @@ public class Console {
     }
 
     public void put(final String s, final int column, final int row) {
+        put(s, column, row, foreground, background);
+    }
+
+    public void put(final String s, final int column, final int row, final Color foreground) {
         put(s, column, row, foreground, background);
     }
 
