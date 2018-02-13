@@ -1,6 +1,7 @@
 package com.rl4j;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +16,7 @@ import java.awt.RenderingHints;
 public class Roguelike {
 
     private String title;
+    @Getter
     private Dimension size;
     private BitmapFont bitmapFont;
     private Integer fpsLimit;

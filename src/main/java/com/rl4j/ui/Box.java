@@ -10,8 +10,8 @@ import java.awt.Color;
 @RequiredArgsConstructor
 public class Box implements Draw {
 
-    private final int top;
-    private final int left;
+    private final int column;
+    private final int row;
     private final int width;
     private final int height;
 
@@ -21,6 +21,7 @@ public class Box implements Draw {
     private Color background;
     @Setter
     private String sliceNine = "╔═╗║ ║╚═╝";
+    private String title;
 
     @Override
     public void draw(final Console console) {
@@ -45,14 +46,23 @@ public class Box implements Draw {
                 } else {
                     c = sliceNine.charAt(4);
                 }
-                console.put(c, column, row, foreground, background);
+                console.put(c, this.column + column, this.row + row, foreground, background);
             }
         }
 
-        console.put(sliceNine.charAt(0), 0, 0, foreground, background);
-        console.put(sliceNine.charAt(2), width - 1, 0, foreground, background);
-        console.put(sliceNine.charAt(6), 0, height - 1, foreground, background);
-        console.put(sliceNine.charAt(8), width - 1, height - 1, foreground, background);
+        console.put(sliceNine.charAt(0), column, row, foreground, background);
+        console.put(sliceNine.charAt(2), column + width - 1, row, foreground, background);
+        console.put(sliceNine.charAt(6), column, row + height - 1, foreground, background);
+        console.put(sliceNine.charAt(8), column + width - 1, row + height - 1, foreground, background);
+
+        if (title != null) {
+            final int titleColumn = column + (width / 2 - title.length() / 2);
+            console.put(title, titleColumn, row, foreground, background);
+        }
+    }
+
+    public void setTitle(final String title) {
+        this.title = title.substring(0, Math.min(width - 2, title.length()));
     }
 
 }
