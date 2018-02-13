@@ -2,8 +2,6 @@ package com.rl4j;
 
 import com.rl4j.ui.Box;
 
-import java.awt.Color;
-
 public class RoguelikeTest {
 
     public static void main(final String[] args) {

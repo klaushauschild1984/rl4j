@@ -22,6 +22,8 @@ public class Box implements Draw {
     @Setter
     private String sliceNine = "╔═╗║ ║╚═╝";
     private String title;
+    @Setter
+    private boolean fill = true;
 
     @Override
     public void draw(final Console console) {
@@ -34,19 +36,21 @@ public class Box implements Draw {
 
         for (int column = 0; column < width; column++) {
             for (int row = 0; row < height; row++) {
-                final char c;
+                Character character = null;
                 if (column == 0) {
-                    c = sliceNine.charAt(3);
+                    character = sliceNine.charAt(3);
                 } else if (column == width - 1) {
-                    c = sliceNine.charAt(5);
+                    character = sliceNine.charAt(5);
                 } else if (row == 0) {
-                    c = sliceNine.charAt(1);
+                    character = sliceNine.charAt(1);
                 } else if (row == height - 1) {
-                    c = sliceNine.charAt(7);
-                } else {
-                    c = sliceNine.charAt(4);
+                    character = sliceNine.charAt(7);
+                } else if (fill) {
+                    character = sliceNine.charAt(4);
                 }
-                console.put(c, this.column + column, this.row + row, foreground, background);
+                if (character != null) {
+                    console.put(character, this.column + column, this.row + row, foreground, background);
+                }
             }
         }
 
