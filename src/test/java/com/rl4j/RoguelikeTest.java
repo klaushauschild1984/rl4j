@@ -14,13 +14,19 @@
  */
 package com.rl4j;
 
+import com.rl4j.ui.Animation;
 import com.rl4j.ui.Box;
+import com.rl4j.ui.Sprite;
+
+import java.awt.Color;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.Arrays;
 
 public class RoguelikeTest {
 
     public static void main(final String[] args) {
         final Roguelike roguelike = Roguelike.builder() //
-                .title("Roguelike 4 Java") //
+                .title("Roguelikes 4 Java") //
                 .fpsLimit(30) //
                 .build();
         final Game game = new Game(roguelike.getSize());
@@ -30,24 +36,41 @@ public class RoguelikeTest {
     private static class Game implements Update, Draw {
 
         private final Box box;
+        private final Animation animation;
 
         private float fps;
 
         public Game(final Dimension size) {
             box = new Box(0, 0, size.getWidth(), size.getHeight());
-            box.setTitle("Roguelike 4 Java");
+            box.setTitle("Roguelikes 4 Java");
+            box.setFill(false);
+
+            final Sprite sprite0 = new Sprite(2, 2, new Dimension(3, 3));
+            sprite0.put("###", 0, 0, Color.RED);
+            final Sprite sprite1 = new Sprite(2, 2, new Dimension(3, 3));
+            sprite1.put("###", 0, 1, Color.RED);
+            final Sprite sprite2 = new Sprite(2, 2, new Dimension(3, 3));
+            sprite2.put("###", 0, 2, Color.RED);
+            animation = new Animation(Arrays.asList( //
+                    new SimpleEntry<>(sprite0, .3f), //
+                    new SimpleEntry<>(sprite1, .3f), //
+                    new SimpleEntry<>(sprite2, .3f) //
+            ));
         }
 
         @Override
         public void draw(final Console console) {
-            console.clear();
+            console.clear(Color.BLUE);
             box.draw(console);
             console.put(String.format("%.0ffps", fps), console.getSize().getWidth() - 6, console.getSize().getHeight() - 1);
+
+            animation.draw(console);
         }
 
         @Override
         public void update(final float elapsed) {
             fps = 1 / elapsed;
+            animation.update(elapsed);
         }
 
     }
