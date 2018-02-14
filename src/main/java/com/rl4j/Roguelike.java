@@ -16,6 +16,7 @@ package com.rl4j;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +28,7 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
 @Builder
+@Slf4j
 public class Roguelike {
 
     private String title;
@@ -82,6 +84,10 @@ public class Roguelike {
                 frame.repaint();
                 currentTime[0] = System.currentTimeMillis();
             }).start();
+            Thread.setDefaultUncaughtExceptionHandler((thread, exception) -> {
+                log.error("Unexpected error.", exception);
+                System.exit(-1);
+            });
         });
     }
 
