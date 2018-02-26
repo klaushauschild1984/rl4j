@@ -13,7 +13,22 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.rl4j;
+package com.rl4j.event;
 
-public interface Game extends Update, Draw, Handler {
+import com.rl4j.Handler;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RequiredArgsConstructor
+public class LoggingHandlerWrapper implements Handler {
+
+    private final Handler handler;
+
+    @Override
+    public void handle(final Event event) {
+        log.debug("{}", event);
+        handler.handle(event);
+    }
+
 }

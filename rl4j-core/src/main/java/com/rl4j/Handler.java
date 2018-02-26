@@ -15,14 +15,28 @@
 
 package com.rl4j;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 @FunctionalInterface
-public interface Handle {
+public interface Handler {
 
     void handle(Event event);
 
-    interface Event {
+    @FunctionalInterface
+    interface EventProducer {
 
-        String getType();
+        void attach(Handler handler);
+
+    }
+
+    @RequiredArgsConstructor
+    @ToString
+    class Event {
+
+        @Getter
+        private final String type;
 
     }
 

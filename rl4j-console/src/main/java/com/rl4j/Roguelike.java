@@ -14,6 +14,8 @@
  */
 package com.rl4j;
 
+import com.rl4j.event.LoggingHandlerWrapper;
+import com.rl4j.event.SystemEventProducer;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +44,10 @@ public class Roguelike {
     }
 
     public void start(final Game game) {
-        start(game, game);
+        start(game, game, game);
     }
 
-    public void start(final Update update, final Draw draw) {
+    public void start(final Update update, final Draw draw, final Handler handler) {
         final Console console = new Console(bitmapFont, size);
         EventQueue.invokeLater(() -> {
             final JFrame frame = new JFrame(title);
@@ -92,6 +94,12 @@ public class Roguelike {
                 log.error("Unexpected error.", exception);
                 System.exit(-1);
             });
+
+            final SystemEventProducer systemEventProducer = new SystemEventProducer(frame);
+
+            Handlers.attach(new LoggingHandlerWrapper(handler));
+
+            systemEventProducer.startEvent();
         });
     }
 

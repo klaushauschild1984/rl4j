@@ -15,5 +15,21 @@
 
 package com.rl4j;
 
-public interface Game extends Update, Draw, Handler {
+import com.rl4j.Handler.EventProducer;
+
+import java.util.Collection;
+import java.util.HashSet;
+
+public class Handlers {
+
+    private static final Collection<EventProducer> EVENT_PRODUCERS = new HashSet<>();
+
+    public static void register(final EventProducer eventProducer) {
+        EVENT_PRODUCERS.add(eventProducer);
+    }
+
+    public static void attach(final Handler handler) {
+        EVENT_PRODUCERS.forEach(eventProducer -> eventProducer.attach(handler));
+    }
+
 }
