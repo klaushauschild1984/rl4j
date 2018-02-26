@@ -42,7 +42,7 @@ public class Sprite extends Backbuffer implements Draw {
     }
 
     @Override
-    public void draw(final Console console) {
+    public void draw(final Backbuffer console) {
         for (int column = 0; column < getSize().getWidth(); column++) {
             for (int row = 0; row < getSize().getHeight(); row++) {
                 final int index = row * getSize().getWidth() + column;

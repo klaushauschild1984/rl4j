@@ -14,25 +14,17 @@
   ~ not, see <http://www.gnu.org/licenses/>.
   -->
 
-<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>rl4j</artifactId>
+        <groupId>com.rl4j</groupId>
+        <version>0.0-SNAPSHOT</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.rl4j</groupId>
-    <artifactId>rl4j</artifactId>
-    <packaging>pom</packaging>
-    <version>0.0-SNAPSHOT</version>
-    <modules>
-        <module>rl4j-core</module>
-        <module>rl4j-console</module>
-        <module>rl4j-jinput</module>
-    </modules>
+    <artifactId>rl4j-jinput</artifactId>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
 
 </project>
