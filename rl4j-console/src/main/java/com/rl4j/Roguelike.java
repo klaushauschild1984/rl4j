@@ -41,6 +41,10 @@ public class Roguelike {
         return new HiddenRoguelikeBuilder();
     }
 
+    public void start(final Game game) {
+        start(game, game);
+    }
+
     public void start(final Update update, final Draw draw) {
         final Console console = new Console(bitmapFont, size);
         EventQueue.invokeLater(() -> {

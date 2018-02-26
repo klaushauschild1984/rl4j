@@ -29,18 +29,18 @@ public class RoguelikeTest {
                 .title("Roguelikes 4 Java") //
                 .fpsLimit(30) //
                 .build();
-        final Game game = new Game(roguelike.getSize());
-        roguelike.start(game, game);
+        final Test test = new Test(roguelike.getSize());
+        roguelike.start(test);
     }
 
-    private static class Game implements Update, Draw {
+    private static class Test implements Game {
 
         private final Box box;
         private final Animation animation;
 
         private float fps;
 
-        public Game(final Dimension size) {
+        public Test(final Dimension size) {
             box = new Box(0, 0, size.getWidth(), size.getHeight());
             box.setTitle("Roguelikes 4 Java");
             box.setFill(false);
@@ -71,6 +71,11 @@ public class RoguelikeTest {
         public void update(final float elapsed) {
             fps = 1 / elapsed;
             animation.update(elapsed);
+        }
+
+        @Override
+        public void handle(final Event event) {
+
         }
 
     }
