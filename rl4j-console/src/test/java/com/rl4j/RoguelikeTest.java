@@ -14,6 +14,7 @@
  */
 package com.rl4j;
 
+import com.rl4j.event.Event;
 import com.rl4j.ui.Animation;
 import com.rl4j.ui.Box;
 import com.rl4j.ui.Sprite;

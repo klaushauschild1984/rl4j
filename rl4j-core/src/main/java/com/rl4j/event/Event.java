@@ -13,23 +13,17 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.rl4j;
+package com.rl4j.event;
 
-import com.rl4j.Handler.EventProducer;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-import java.util.Collection;
-import java.util.HashSet;
+@RequiredArgsConstructor
+@ToString
+public class Event {
 
-public class Handlers {
-
-    private static final Collection<EventProducer> EVENT_PRODUCERS = new HashSet<>();
-
-    public static void register(final EventProducer eventProducer) {
-        EVENT_PRODUCERS.add(eventProducer);
-    }
-
-    public static void attach(final Handler handler) {
-        EVENT_PRODUCERS.forEach(eventProducer -> eventProducer.attach(handler));
-    }
+    @Getter
+    private final String type;
 
 }

@@ -26,5 +26,41 @@
 
     <artifactId>rl4j-jinput</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.rl4j</groupId>
+            <artifactId>rl4j-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.natives</groupId>
+            <artifactId>java-natives</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>net.java.jinput</groupId>
+            <artifactId>jinput</artifactId>
+            <version>2.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.16</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+    <repositories>
+        <repository>
+            <id>java-natives-repo</id>
+            <name>Java Natives Repository</name>
+            <url>https://raw.githubusercontent.com/klaushauschild1984/java-natives/mvn-repo/</url>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+            </snapshots>
+        </repository>
+    </repositories>
 
 </project>

@@ -13,9 +13,13 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.rl4j;
+package com.rl4j.event;
 
-import com.rl4j.event.Handler;
+import com.rl4j.event.Event;
 
-public interface Game extends Update, Draw, Handler {
+@FunctionalInterface
+public interface Handler {
+
+    void handle(Event event);
+
 }

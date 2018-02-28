@@ -15,7 +15,6 @@
 
 package com.rl4j.event;
 
-import com.rl4j.Handler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

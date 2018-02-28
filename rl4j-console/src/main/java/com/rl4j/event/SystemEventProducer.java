@@ -15,11 +15,6 @@
 
 package com.rl4j.event;
 
-import com.rl4j.Handler;
-import com.rl4j.Handler.Event;
-import com.rl4j.Handler.EventProducer;
-import com.rl4j.Handlers;
-
 import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

@@ -14,6 +14,9 @@
  */
 package com.rl4j;
 
+import com.rl4j.event.Handler;
+import com.rl4j.event.Handlers;
+import com.rl4j.event.KeyboardEventProducer;
 import com.rl4j.event.LoggingHandlerWrapper;
 import com.rl4j.event.SystemEventProducer;
 import lombok.Builder;
@@ -56,7 +59,8 @@ public class Roguelike {
                 {
                     final int width = bitmapFont.getTileSize().getWidth() * size.getWidth();
                     final int height = bitmapFont.getTileSize().getHeight() * size.getHeight();
-                    setPreferredSize(new java.awt.Dimension(width - 15, height - 15));
+                    setPreferredSize(new java.awt.Dimension(width, height));
+//                    setPreferredSize(new java.awt.Dimension(width - 15, height - 15));
                 }
 
                 @Override
@@ -71,6 +75,7 @@ public class Roguelike {
                     console.flush(g2d);
                 }
             });
+            frame.setUndecorated(true);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
@@ -96,6 +101,12 @@ public class Roguelike {
             });
 
             final SystemEventProducer systemEventProducer = new SystemEventProducer(frame);
+            new KeyboardEventProducer(frame);
+            try {
+                Class.forName("com.rl4j.event.JInputEventProducer");
+            } catch (final ClassNotFoundException exception) {
+                log.debug("No com.rl4j.event.JInputEventProducer in classpath.");
+            }
 
             Handlers.attach(new LoggingHandlerWrapper(handler));
 
