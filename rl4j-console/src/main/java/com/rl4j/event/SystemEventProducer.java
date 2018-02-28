@@ -28,8 +28,9 @@ public class SystemEventProducer implements EventProducer {
         frame.addWindowListener(new WindowAdapter() {
 
             @Override
-            public void windowClosing(final WindowEvent event) {
-                handler.handle(new Event("system stopped"));
+            public void windowClosed(final WindowEvent e) {
+                handler.handle(new StoppedEvent());
+                System.exit(0);
             }
 
         });
@@ -41,7 +42,13 @@ public class SystemEventProducer implements EventProducer {
     }
 
     public void startEvent() {
-        handler.handle(new Event("system started"));
+        handler.handle(new StartedEvent());
+    }
+
+    private static class StartedEvent implements Event {
+    }
+
+    private static class StoppedEvent implements Event {
     }
 
 }

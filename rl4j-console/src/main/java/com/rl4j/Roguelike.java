@@ -36,11 +36,14 @@ import java.awt.RenderingHints;
 @Slf4j
 public class Roguelike {
 
+    private static JFrame frame;
+
     private String title;
     @Getter
     private Dimension size;
     private BitmapFont bitmapFont;
     private Integer fpsLimit;
+    private boolean borderless;
 
     public static RoguelikeBuilder builder() {
         return new HiddenRoguelikeBuilder();
@@ -53,14 +56,19 @@ public class Roguelike {
     public void start(final Update update, final Draw draw, final Handler handler) {
         final Console console = new Console(bitmapFont, size);
         EventQueue.invokeLater(() -> {
-            final JFrame frame = new JFrame(title);
+            frame = new JFrame(title);
             frame.add(new JPanel() {
 
                 {
                     final int width = bitmapFont.getTileSize().getWidth() * size.getWidth();
                     final int height = bitmapFont.getTileSize().getHeight() * size.getHeight();
-                    setPreferredSize(new java.awt.Dimension(width, height));
-//                    setPreferredSize(new java.awt.Dimension(width - 15, height - 15));
+                    final java.awt.Dimension preferredSize;
+                    if (borderless) {
+                        preferredSize = new java.awt.Dimension(width, height);
+                    } else {
+                        preferredSize = new java.awt.Dimension(width - 15, height - 15);
+                    }
+                    setPreferredSize(preferredSize);
                 }
 
                 @Override
@@ -75,7 +83,7 @@ public class Roguelike {
                     console.flush(g2d);
                 }
             });
-            frame.setUndecorated(true);
+            frame.setUndecorated(borderless);
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
@@ -114,6 +122,10 @@ public class Roguelike {
         });
     }
 
+    public void stop() {
+        frame.dispose();
+    }
+
     private float frameTime(final long currentTime) {
         return (System.currentTimeMillis() - currentTime) / 1000f;
     }
@@ -133,7 +145,8 @@ public class Roguelike {
                     super.title, //
                     withDefault(super.size, new Dimension(40, 30)), //
                     withDefault(super.bitmapFont, BitmapFont.create(Roguelike.class.getResourceAsStream("font32x32.png"), new Dimension(32, 32))), //
-                    super.fpsLimit //
+                    super.fpsLimit, //
+                    super.borderless //
             );
         }
 

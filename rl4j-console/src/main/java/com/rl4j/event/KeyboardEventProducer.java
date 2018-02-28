@@ -15,6 +15,7 @@
 
 package com.rl4j.event;
 
+import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,14 +61,14 @@ public class KeyboardEventProducer implements KeyListener, EventProducer {
         handler.handle(new KeyboardEvent(KeyboardEvent.Key.valueOd(keyEvent.getKeyCode()), false));
     }
 
+    @Getter
     @ToString
-    public static class KeyboardEvent extends Event {
+    public static class KeyboardEvent implements Event {
 
         private final Key key;
         private final boolean pressed;
 
         public KeyboardEvent(final Key key, final boolean pressed) {
-            super("key");
             this.key = key;
             this.pressed = pressed;
         }
@@ -86,9 +87,7 @@ public class KeyboardEventProducer implements KeyListener, EventProducer {
 
             ENTER(10),
 
-            ESCAPE(27),
-
-            ;
+            ESCAPE(27),;
 
             private final int keyCode;
 

@@ -15,6 +15,8 @@
 package com.rl4j;
 
 import com.rl4j.event.Event;
+import com.rl4j.event.KeyboardEventProducer.KeyboardEvent;
+import com.rl4j.event.KeyboardEventProducer.KeyboardEvent.Key;
 import com.rl4j.ui.Animation;
 import com.rl4j.ui.Box;
 import com.rl4j.ui.Sprite;
@@ -29,8 +31,9 @@ public class RoguelikeTest {
         final Roguelike roguelike = Roguelike.builder() //
                 .title("Roguelikes 4 Java") //
                 .fpsLimit(30) //
+                .borderless(true) //
                 .build();
-        final Test test = new Test(roguelike.getSize());
+        final Test test = new Test(roguelike);
         roguelike.start(test);
     }
 
@@ -38,11 +41,12 @@ public class RoguelikeTest {
 
         private final Box box;
         private final Animation animation;
-
+        private Roguelike roguelike;
         private float fps;
 
-        public Test(final Dimension size) {
-            box = new Box(0, 0, size.getWidth(), size.getHeight());
+        public Test(final Roguelike roguelike) {
+            this.roguelike = roguelike;
+            box = new Box(0, 0, roguelike.getSize().getWidth(), roguelike.getSize().getHeight());
             box.setTitle("Roguelikes 4 Java");
             box.setFill(false);
 
@@ -76,7 +80,11 @@ public class RoguelikeTest {
 
         @Override
         public void handle(final Event event) {
-
+            if (event instanceof KeyboardEvent) {
+                if (((KeyboardEvent) event).getKey() == Key.ESCAPE) {
+                    roguelike.stop();
+                }
+            }
         }
 
     }

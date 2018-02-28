@@ -15,15 +15,5 @@
 
 package com.rl4j.event;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-
-@RequiredArgsConstructor
-@ToString
-public class Event {
-
-    @Getter
-    private final String type;
-
+public interface Event {
 }
