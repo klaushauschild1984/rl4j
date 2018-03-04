@@ -15,15 +15,32 @@
 
 package com.rl4j.event;
 
-import java.util.Optional;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
-public interface Event {
+public interface MouseEvent extends Event {
 
-    default <E extends Event> Optional<E> as(final Class<E> eventType) {
-        if (!eventType.isAssignableFrom(this.getClass())) {
-            return Optional.empty();
+    @Getter
+    @ToString
+    @RequiredArgsConstructor
+    class MouseButtonEvent implements MouseEvent {
+
+        private final Button button;
+        private final boolean pressed;
+        private final int column;
+        private final int row;
+
+        public enum Button {
+
+            LEFT,
+
+            MIDDLE,
+
+            RIGHT,;
+
         }
-        return Optional.of((E) this);
+
     }
 
 }

@@ -15,8 +15,9 @@
 package com.rl4j;
 
 import com.rl4j.event.Event;
-import com.rl4j.event.KeyboardEventProducer.KeyboardEvent;
-import com.rl4j.event.KeyboardEventProducer.KeyboardEvent.Key;
+import com.rl4j.event.KeyboardEvent;
+import com.rl4j.event.KeyboardEvent.Key;
+import com.rl4j.event.MouseEvent.MouseButtonEvent;
 import com.rl4j.ui.Animation;
 import com.rl4j.ui.Box;
 import com.rl4j.ui.Sprite;
@@ -43,6 +44,7 @@ public class RoguelikeTest {
         private final Animation animation;
         private Roguelike roguelike;
         private float fps;
+        private String mouseButton = "";
 
         public Test(final Roguelike roguelike) {
             this.roguelike = roguelike;
@@ -70,6 +72,7 @@ public class RoguelikeTest {
             console.put(String.format("%.0ffps", fps), console.getSize().getWidth() - 6, console.getSize().getHeight() - 1);
 
             animation.draw(console);
+            console.put(mouseButton, 10, 10);
         }
 
         @Override
@@ -80,11 +83,20 @@ public class RoguelikeTest {
 
         @Override
         public void handle(final Event event) {
-            if (event instanceof KeyboardEvent) {
-                if (((KeyboardEvent) event).getKey() == Key.ESCAPE) {
-                    roguelike.stop();
-                }
-            }
+            event.as(KeyboardEvent.class) //
+                    .ifPresent(keyboardEvent -> {
+                        if (((KeyboardEvent) event).getKey() == Key.ESCAPE) {
+                            roguelike.stop();
+                        }
+                    });
+
+            event.as(MouseButtonEvent.class) //
+                    .ifPresent(mouseButtonEvent -> {
+                        if (!mouseButtonEvent.isPressed()) {
+                            return;
+                        }
+                        mouseButton = String.format("%s: %s, %s", mouseButtonEvent.getButton(), mouseButtonEvent.getColumn(), mouseButtonEvent.getRow());
+                    });
         }
 
     }
