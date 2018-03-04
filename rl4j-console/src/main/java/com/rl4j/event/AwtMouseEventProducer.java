@@ -18,11 +18,13 @@ package com.rl4j.event;
 import com.rl4j.Dimension;
 import com.rl4j.event.MouseEvent.MouseButtonEvent;
 import com.rl4j.event.MouseEvent.MouseButtonEvent.Button;
+import com.rl4j.event.MouseEvent.MouseMoveEvent;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.JFrame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Objects;
 
 @Slf4j
 public class AwtMouseEventProducer extends MouseAdapter implements EventProducer {
@@ -31,12 +33,13 @@ public class AwtMouseEventProducer extends MouseAdapter implements EventProducer
     private final boolean[] pressed = new boolean[3];
 
     private Handler handler;
+    private com.rl4j.event.MouseEvent lastMouseMoveEvent;
 
     public AwtMouseEventProducer(final Dimension tileSize, final JFrame frame) {
         this.tileSize = tileSize;
         Handlers.register(this);
         frame.addMouseListener(this);
-        // TODO frame.addMouseMotionListener(this);
+        frame.addMouseMotionListener(this);
         // TODO frame.addMouseWheelListener(this);
     }
 
@@ -55,13 +58,27 @@ public class AwtMouseEventProducer extends MouseAdapter implements EventProducer
         handler.handle(fromMouseEvent(event));
     }
 
-    private MouseButtonEvent fromMouseEvent(final MouseEvent event) {
-        final int buttonIndex = event.getButton() - 1;
-        final Button button = Button.values()[buttonIndex];
-        pressed[buttonIndex] = !pressed[buttonIndex];
+    @Override
+    public void mouseMoved(final MouseEvent e) {
+        final com.rl4j.event.MouseEvent mouseMoveEvent = fromMouseEvent(e);
+        if (!Objects.equals(lastMouseMoveEvent, mouseMoveEvent)) {
+            handler.handle(mouseMoveEvent);
+            lastMouseMoveEvent = mouseMoveEvent;
+        }
+    }
+
+    private com.rl4j.event.MouseEvent fromMouseEvent(final MouseEvent event) {
         final int column = event.getX() / tileSize.getWidth();
         final int row = event.getY() / tileSize.getHeight();
-        return new MouseButtonEvent(button, pressed[buttonIndex], column, row);
+
+        final int buttonIndex = event.getButton() - 1;
+        if (buttonIndex == -1) {
+            return new MouseMoveEvent(column, row);
+        }
+
+        final Button button = Button.values()[buttonIndex];
+        pressed[buttonIndex] = !pressed[buttonIndex];
+        return new MouseButtonEvent(column, row, button, pressed[buttonIndex]);
     }
 
 }

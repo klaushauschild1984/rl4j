@@ -15,21 +15,44 @@
 
 package com.rl4j.event;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
-public interface MouseEvent extends Event {
+@Getter
+@ToString
+@EqualsAndHashCode
+@RequiredArgsConstructor
+public abstract class MouseEvent implements Event {
+
+    private final int column;
+    private final int row;
+
+
+    @ToString(callSuper = true)
+    @EqualsAndHashCode(callSuper = true)
+    public static class MouseMoveEvent extends MouseEvent {
+
+        public MouseMoveEvent(final int column, final int row) {
+            super(column, row);
+        }
+
+    }
 
     @Getter
+    @EqualsAndHashCode(callSuper = true)
     @ToString
-    @RequiredArgsConstructor
-    class MouseButtonEvent implements MouseEvent {
+    public static class MouseButtonEvent extends MouseEvent {
 
         private final Button button;
         private final boolean pressed;
-        private final int column;
-        private final int row;
+
+        public MouseButtonEvent(final int column, final int row, final Button button, final boolean pressed) {
+            super(column, row);
+            this.button = button;
+            this.pressed = pressed;
+        }
 
         public enum Button {
 
