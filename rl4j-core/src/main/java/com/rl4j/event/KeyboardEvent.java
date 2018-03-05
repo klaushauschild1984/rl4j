@@ -53,7 +53,7 @@ public class KeyboardEvent implements Event {
             this.keyCode = keyCode;
         }
 
-        public static Key valueOd(final int keyCode) {
+        public static Key valueOf(final int keyCode) {
             return Arrays.stream(Key.values()) //
                     .filter(key -> key.keyCode == keyCode) //
                     .findAny() //
