@@ -57,6 +57,9 @@ public class Roguelike {
     public void start(final Update update, final Draw draw, final Handler handler) {
         final Console console = new Console(bitmapFont, size);
         EventQueue.invokeLater(() -> {
+            if (title != null) {
+                Thread.currentThread().setName(title);
+            }
             frame = new JFrame(title);
             frame.add(new JPanel() {
 
