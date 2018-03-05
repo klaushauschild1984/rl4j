@@ -33,19 +33,25 @@ public class KeyboardEvent implements Event {
 
     public enum Key {
 
-        UP(0),
-
-        DOWN(0),
-
-        LEFT(0),
-
-        RIGHT(0),
+        // arrow keys
+        LEFT(37),
+        UP(38),
+        RIGHT(39),
+        DOWN(40),
 
         SPACE(32),
-
         ENTER(10),
+        ESCAPE(27),
+        CRTL(17),
 
-        ESCAPE(27),;
+        // letters
+        A(65),
+        W(87),
+        D(68),
+        S(83),
+
+        //
+        ;
 
         private final int keyCode;
 
