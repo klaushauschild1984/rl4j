@@ -15,6 +15,7 @@
 
 package com.rl4j.event;
 
+import com.rl4j.event.KeyboardEvent.Key;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.JFrame;
@@ -48,14 +49,20 @@ public class AwtKeyboardEventProducer implements KeyListener, EventProducer {
     public void keyPressed(final KeyEvent keyEvent) {
         final boolean added = pressedKeys.add(keyEvent.getKeyCode());
         if (added) {
-            handler.handle(new KeyboardEvent(KeyboardEvent.Key.valueOd(keyEvent.getKeyCode()), true));
+            final Key key = Key.valueOf(keyEvent.getKeyCode());
+            if (key != null) {
+                handler.handle(new KeyboardEvent(key, true));
+            }
         }
     }
 
     @Override
     public void keyReleased(final KeyEvent keyEvent) {
         pressedKeys.remove(keyEvent.getKeyCode());
-        handler.handle(new KeyboardEvent(KeyboardEvent.Key.valueOd(keyEvent.getKeyCode()), false));
+        final Key key = Key.valueOf(keyEvent.getKeyCode());
+        if (key != null) {
+            handler.handle(new KeyboardEvent(key, false));
+        }
     }
 
 }
