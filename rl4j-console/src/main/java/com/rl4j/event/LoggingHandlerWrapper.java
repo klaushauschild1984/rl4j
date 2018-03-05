@@ -16,17 +16,28 @@
 package com.rl4j.event;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Slf4j
 @RequiredArgsConstructor
 public class LoggingHandlerWrapper implements Handler {
+
+    private static final Logger allEventsLogger = LoggerFactory.getLogger(LoggingHandlerWrapper.class.getPackage().getName());
+    private static final Logger keyboardEventsLogger = LoggerFactory.getLogger(LoggingHandlerWrapper.class.getPackage().getName() + ".keyboard");
+    private static final Logger mouseEventsLogger = LoggerFactory.getLogger(LoggingHandlerWrapper.class.getPackage().getName() + ".mouse");
 
     private final Handler handler;
 
     @Override
     public void handle(final Event event) {
-        log.debug("{}", event);
+        if (allEventsLogger.isDebugEnabled()) {
+            allEventsLogger.debug("{}", event);
+        } else {
+            event.as(KeyboardEvent.class)
+                    .ifPresent(keyboardEvent -> keyboardEventsLogger.debug("{}", keyboardEvent));
+            event.as(MouseEvent.class)
+                    .ifPresent(mouseEvent -> mouseEventsLogger.debug("{}", mouseEvent));
+        }
         handler.handle(event);
     }
 
