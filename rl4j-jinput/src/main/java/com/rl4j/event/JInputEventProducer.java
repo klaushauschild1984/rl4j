@@ -30,13 +30,11 @@ import java.util.TimerTask;
 
 // https://codereview.stackexchange.com/questions/107143/event-based-xbox-controller-polling
 @Slf4j
-public class JInputEventProducer implements EventProducer {
+public class JInputEventProducer {
 
     static {
         new JInputEventProducer();
     }
-
-    private Handler handler;
 
     private JInputEventProducer() {
         new NativeLibrary("jinput") //
@@ -55,16 +53,9 @@ public class JInputEventProducer implements EventProducer {
                 .findAny() //
                 .orElseGet(() -> null);
 
-        Handlers.register(this);
-
         log.debug("Registered.");
 
         poll(gamepad);
-    }
-
-    @Override
-    public void attach(final Handler handler) {
-        this.handler = handler;
     }
 
     private void poll(final Controller controller) {

@@ -27,42 +27,35 @@ import java.awt.event.MouseEvent;
 import java.util.Objects;
 
 @Slf4j
-public class AwtMouseEventProducer extends MouseAdapter implements EventProducer {
+public class AwtMouseEventProducer extends MouseAdapter {
 
     private final Dimension tileSize;
     private final boolean[] pressed = new boolean[3];
 
-    private Handler handler;
     private com.rl4j.event.MouseEvent lastMouseMoveEvent;
 
     public AwtMouseEventProducer(final Dimension tileSize, final JFrame frame) {
         this.tileSize = tileSize;
-        Handlers.register(this);
         frame.addMouseListener(this);
         frame.addMouseMotionListener(this);
         // TODO frame.addMouseWheelListener(this);
     }
 
     @Override
-    public void attach(final Handler handler) {
-        this.handler = handler;
-    }
-
-    @Override
     public void mousePressed(final MouseEvent event) {
-        handler.handle(fromMouseEvent(event));
+        EventBus.dispatch(fromMouseEvent(event));
     }
 
     @Override
     public void mouseReleased(final MouseEvent event) {
-        handler.handle(fromMouseEvent(event));
+        EventBus.dispatch(fromMouseEvent(event));
     }
 
     @Override
     public void mouseMoved(final MouseEvent e) {
         final com.rl4j.event.MouseEvent mouseMoveEvent = fromMouseEvent(e);
         if (!Objects.equals(lastMouseMoveEvent, mouseMoveEvent)) {
-            handler.handle(mouseMoveEvent);
+            EventBus.dispatch(mouseMoveEvent);
             lastMouseMoveEvent = mouseMoveEvent;
         }
     }

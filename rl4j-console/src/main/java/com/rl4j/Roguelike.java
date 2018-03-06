@@ -16,9 +16,8 @@ package com.rl4j;
 
 import com.rl4j.event.AwtKeyboardEventProducer;
 import com.rl4j.event.AwtMouseEventProducer;
+import com.rl4j.event.EventBus;
 import com.rl4j.event.Handler;
-import com.rl4j.event.Handlers;
-import com.rl4j.event.LoggingHandlerWrapper;
 import com.rl4j.event.SystemEventProducer;
 import lombok.Builder;
 import lombok.Getter;
@@ -121,7 +120,7 @@ public class Roguelike {
                 log.debug("No com.rl4j.event.JInputEventProducer in classpath.");
             }
 
-            Handlers.attach(new LoggingHandlerWrapper(handler));
+            EventBus.register(handler);
 
             systemEventProducer.startEvent();
         });

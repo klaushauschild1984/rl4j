@@ -25,20 +25,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Slf4j
-public class AwtKeyboardEventProducer implements KeyListener, EventProducer {
+public class AwtKeyboardEventProducer implements KeyListener {
 
     private final Set<Integer> pressedKeys = new HashSet<>();
 
-    private Handler handler;
-
     public AwtKeyboardEventProducer(final JFrame frame) {
-        Handlers.register(this);
         frame.addKeyListener(this);
-    }
-
-    @Override
-    public void attach(final Handler handler) {
-        this.handler = handler;
     }
 
     @Override
@@ -51,7 +43,7 @@ public class AwtKeyboardEventProducer implements KeyListener, EventProducer {
         if (added) {
             final Key key = Key.valueOf(keyEvent.getKeyCode());
             if (key != null) {
-                handler.handle(new KeyboardEvent(key, true));
+                EventBus.dispatch(new KeyboardEvent(key, true));
             }
         }
     }
@@ -61,7 +53,7 @@ public class AwtKeyboardEventProducer implements KeyListener, EventProducer {
         pressedKeys.remove(keyEvent.getKeyCode());
         final Key key = Key.valueOf(keyEvent.getKeyCode());
         if (key != null) {
-            handler.handle(new KeyboardEvent(key, false));
+            EventBus.dispatch(new KeyboardEvent(key, false));
         }
     }
 

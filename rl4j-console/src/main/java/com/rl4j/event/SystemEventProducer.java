@@ -19,30 +19,22 @@ import javax.swing.JFrame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class SystemEventProducer implements EventProducer {
-
-    private Handler handler;
+public class SystemEventProducer {
 
     public SystemEventProducer(final JFrame frame) {
-        Handlers.register(this);
         frame.addWindowListener(new WindowAdapter() {
 
             @Override
             public void windowClosed(final WindowEvent e) {
-                handler.handle(new StoppedEvent());
+                EventBus.dispatch(new StoppedEvent());
                 System.exit(0);
             }
 
         });
     }
 
-    @Override
-    public void attach(final Handler handler) {
-        this.handler = handler;
-    }
-
     public void startEvent() {
-        handler.handle(new StartedEvent());
+        EventBus.dispatch(new StartedEvent());
     }
 
     private static class StartedEvent implements Event {

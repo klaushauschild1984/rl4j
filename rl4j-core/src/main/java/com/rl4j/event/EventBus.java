@@ -15,21 +15,30 @@
 
 package com.rl4j.event;
 
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@RequiredArgsConstructor
-public class LoggingHandlerWrapper implements Handler {
+import java.util.ArrayList;
+import java.util.List;
 
-    private static final Logger allEventsLogger = LoggerFactory.getLogger(LoggingHandlerWrapper.class.getPackage().getName());
-    private static final Logger keyboardEventsLogger = LoggerFactory.getLogger(LoggingHandlerWrapper.class.getPackage().getName() + ".keyboard");
-    private static final Logger mouseEventsLogger = LoggerFactory.getLogger(LoggingHandlerWrapper.class.getPackage().getName() + ".mouse");
+public enum EventBus {
 
-    private final Handler handler;
+    ;
 
-    @Override
-    public void handle(final Event event) {
+    private static final Logger allEventsLogger = LoggerFactory.getLogger(EventBus.class.getPackage().getName());
+    private static final Logger keyboardEventsLogger = LoggerFactory.getLogger(EventBus.class.getPackage().getName() + ".keyboard");
+    private static final Logger mouseEventsLogger = LoggerFactory.getLogger(EventBus.class.getPackage().getName() + ".mouse");
+
+    private static final List<Handler> HANDLERS = new ArrayList<>();
+
+    public static void register(final Handler handler) {
+        if (HANDLERS.contains(handler)) {
+            return;
+        }
+        HANDLERS.add(handler);
+    }
+
+    public static void dispatch(final Event event) {
         if (allEventsLogger.isDebugEnabled()) {
             allEventsLogger.debug("{}", event);
         } else {
@@ -38,7 +47,8 @@ public class LoggingHandlerWrapper implements Handler {
             event.as(MouseEvent.class)
                     .ifPresent(mouseEvent -> mouseEventsLogger.debug("{}", mouseEvent));
         }
-        handler.handle(event);
+
+        HANDLERS.forEach(handler -> handler.handle(event));
     }
 
 }
