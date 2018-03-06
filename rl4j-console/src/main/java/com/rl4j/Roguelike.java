@@ -19,6 +19,7 @@ import com.rl4j.event.AwtMouseEventProducer;
 import com.rl4j.event.EventBus;
 import com.rl4j.event.Handler;
 import com.rl4j.event.SystemEventProducer;
+import com.rl4j.ui.Cursor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -32,18 +33,28 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
-@Builder
 @Slf4j
 public class Roguelike {
 
     private static JFrame frame;
 
-    private String title;
+    private final String title;
     @Getter
-    private Dimension size;
-    private BitmapFont bitmapFont;
-    private Integer fpsLimit;
-    private boolean borderless;
+    private final Dimension size;
+    private final BitmapFont bitmapFont;
+    private final Integer fpsLimit;
+    private final boolean borderless;
+    @Getter
+    private final Cursor cursor = new Cursor();
+
+    @Builder
+    public Roguelike(final String title, final Dimension size, final BitmapFont bitmapFont, final Integer fpsLimit, final boolean borderless) {
+        this.title = title;
+        this.size = size;
+        this.bitmapFont = bitmapFont;
+        this.fpsLimit = fpsLimit;
+        this.borderless = borderless;
+    }
 
     public static RoguelikeBuilder builder() {
         return new HiddenRoguelikeBuilder();
@@ -82,6 +93,7 @@ public class Roguelike {
                             RenderingHints.VALUE_ANTIALIAS_ON);
 
                     draw.draw(console);
+                    cursor.draw(console);
 
                     console.flush(g2d);
                 }
@@ -103,6 +115,7 @@ public class Roguelike {
                 }
                 final float elapsed = frameTime(currentTime[0]);
                 update.update(elapsed);
+                cursor.update(elapsed);
                 frame.repaint();
                 currentTime[0] = System.currentTimeMillis();
             }).start();

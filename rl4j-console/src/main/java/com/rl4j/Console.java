@@ -18,7 +18,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
-public class Console extends Backbuffer {
+public class Console extends BackBuffer {
 
     private final BitmapFont bitmapFont;
     private final Character[] frontBuffer;

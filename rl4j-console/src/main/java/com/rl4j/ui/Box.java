@@ -14,7 +14,7 @@
  */
 package com.rl4j.ui;
 
-import com.rl4j.Backbuffer;
+import com.rl4j.BackBuffer;
 import com.rl4j.Draw;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -40,7 +40,7 @@ public class Box implements Draw {
     private boolean fill = true;
 
     @Override
-    public void draw(final Backbuffer console) {
+    public void draw(final BackBuffer console) {
         if (foreground == null) {
             foreground = console.getForeground();
         }

@@ -14,7 +14,7 @@
  */
 package com.rl4j.ui;
 
-import com.rl4j.Backbuffer;
+import com.rl4j.BackBuffer;
 import com.rl4j.Draw;
 import com.rl4j.Update;
 
@@ -41,7 +41,7 @@ public class Animation implements Update, Draw {
     }
 
     @Override
-    public void draw(final Backbuffer console) {
+    public void draw(final BackBuffer console) {
         int frame = 0;
         float frameTime = 0f;
         while (frameTime <= currentTime) {

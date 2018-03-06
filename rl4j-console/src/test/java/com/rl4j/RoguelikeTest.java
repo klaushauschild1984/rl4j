@@ -66,7 +66,7 @@ public class RoguelikeTest {
         }
 
         @Override
-        public void draw(final Backbuffer console) {
+        public void draw(final BackBuffer console) {
             console.clear(Color.BLUE);
             box.draw(console);
             console.put(String.format("%.0ffps", fps), console.getSize().getWidth() - 6, console.getSize().getHeight() - 1);

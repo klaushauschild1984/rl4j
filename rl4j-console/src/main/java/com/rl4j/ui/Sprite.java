@@ -14,15 +14,14 @@
  */
 package com.rl4j.ui;
 
-import com.rl4j.Backbuffer;
-import com.rl4j.Console;
+import com.rl4j.BackBuffer;
 import com.rl4j.Dimension;
 import com.rl4j.Draw;
 import lombok.Setter;
 
 import java.awt.Color;
 
-public class Sprite extends Backbuffer implements Draw {
+public class Sprite extends BackBuffer implements Draw {
 
     private final boolean transparent;
     @Setter
@@ -42,7 +41,7 @@ public class Sprite extends Backbuffer implements Draw {
     }
 
     @Override
-    public void draw(final Backbuffer console) {
+    public void draw(final BackBuffer console) {
         for (int column = 0; column < getSize().getWidth(); column++) {
             for (int row = 0; row < getSize().getHeight(); row++) {
                 final int index = row * getSize().getWidth() + column;

@@ -22,7 +22,7 @@ import lombok.ToString;
 
 import java.awt.Color;
 
-public abstract class Backbuffer {
+public abstract class BackBuffer {
 
     @Getter
     private final Dimension size;
@@ -35,7 +35,7 @@ public abstract class Backbuffer {
     @Setter
     private Color background = Color.BLACK;
 
-    public Backbuffer(final Dimension size) {
+    public BackBuffer(final Dimension size) {
         this.size = size;
         backBuffer = new Character[size.getWidth() * size.getHeight()];
     }
@@ -54,6 +54,10 @@ public abstract class Backbuffer {
         }
         final Character character = new Character(c, foreground, background);
         backBuffer[row * size.getWidth() + column] = character;
+    }
+
+    public Character get(final int column, final int row) {
+        return backBuffer[row * size.getWidth() + column];
     }
 
     public void put(final String s, final int column, final int row) {

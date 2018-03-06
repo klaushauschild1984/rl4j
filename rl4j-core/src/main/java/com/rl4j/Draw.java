@@ -17,6 +17,6 @@ package com.rl4j;
 @FunctionalInterface
 public interface Draw {
 
-    void draw(final Backbuffer console);
+    void draw(final BackBuffer console);
 
 }
