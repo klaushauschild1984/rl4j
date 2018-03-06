@@ -52,12 +52,17 @@ public class AwtMouseEventProducer extends MouseAdapter {
     }
 
     @Override
-    public void mouseMoved(final MouseEvent e) {
-        final com.rl4j.event.MouseEvent mouseMoveEvent = fromMouseEvent(e);
+    public void mouseMoved(final MouseEvent event) {
+        final com.rl4j.event.MouseEvent mouseMoveEvent = fromMouseEvent(event);
         if (!Objects.equals(lastMouseMoveEvent, mouseMoveEvent)) {
             EventBus.dispatch(mouseMoveEvent);
             lastMouseMoveEvent = mouseMoveEvent;
         }
+    }
+
+    @Override
+    public void mouseExited(final MouseEvent event) {
+        EventBus.dispatch(new MouseMoveEvent(-1, -1));
     }
 
     private com.rl4j.event.MouseEvent fromMouseEvent(final MouseEvent event) {

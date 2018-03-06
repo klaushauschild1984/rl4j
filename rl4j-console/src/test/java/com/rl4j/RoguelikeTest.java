@@ -33,6 +33,7 @@ public class RoguelikeTest {
                 .title("Roguelikes 4 Java") //
                 .fpsLimit(30) //
                 .borderless(true) //
+                .nativeCursor(true) //
                 .build();
         final Test test = new Test(roguelike);
         roguelike.start(test);
@@ -63,6 +64,10 @@ public class RoguelikeTest {
                     new SimpleEntry<>(sprite1, .3f), //
                     new SimpleEntry<>(sprite2, .3f) //
             ));
+
+            roguelike.getCursor().setColumn(10);
+            roguelike.getCursor().setRow(10);
+            roguelike.getCursor().setBlinkInterval(0);
         }
 
         @Override

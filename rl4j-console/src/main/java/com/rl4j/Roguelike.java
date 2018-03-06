@@ -31,7 +31,9 @@ import javax.swing.WindowConstants;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 
 @Slf4j
 public class Roguelike {
@@ -45,15 +47,18 @@ public class Roguelike {
     private final Integer fpsLimit;
     private final boolean borderless;
     @Getter
-    private final Cursor cursor = new Cursor();
+    private final Cursor cursor;
+    private final boolean nativeCursor;
 
     @Builder
-    public Roguelike(final String title, final Dimension size, final BitmapFont bitmapFont, final Integer fpsLimit, final boolean borderless) {
+    public Roguelike(final String title, final Dimension size, final BitmapFont bitmapFont, final Integer fpsLimit, final boolean borderless, final boolean nativeCursor) {
         this.title = title;
         this.size = size;
         this.bitmapFont = bitmapFont;
         this.fpsLimit = fpsLimit;
         this.borderless = borderless;
+        this.nativeCursor = nativeCursor;
+        cursor = new Cursor(nativeCursor);
     }
 
     public static RoguelikeBuilder builder() {
@@ -99,6 +104,10 @@ public class Roguelike {
                 }
             });
             frame.setUndecorated(borderless);
+            if (nativeCursor) {
+                final BufferedImage cursor = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+                frame.setCursor(frame.getToolkit().createCustomCursor(cursor, new Point(0, 0), "null"));
+            }
             frame.pack();
             frame.setLocationRelativeTo(null);
             frame.setResizable(false);
@@ -163,7 +172,8 @@ public class Roguelike {
                     withDefault(super.size, new Dimension(40, 30)), //
                     withDefault(super.bitmapFont, BitmapFont.create(Roguelike.class.getResourceAsStream("font32x32.png"), new Dimension(32, 32))), //
                     super.fpsLimit, //
-                    super.borderless //
+                    super.borderless, //
+                    super.nativeCursor //
             );
         }
 

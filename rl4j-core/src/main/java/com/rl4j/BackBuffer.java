@@ -57,6 +57,9 @@ public abstract class BackBuffer {
     }
 
     public Character get(final int column, final int row) {
+        if (!contains(column, row)) {
+            return null;
+        }
         return backBuffer[row * size.getWidth() + column];
     }
 
