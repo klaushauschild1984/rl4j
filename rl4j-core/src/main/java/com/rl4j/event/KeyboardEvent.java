@@ -39,6 +39,10 @@ public class KeyboardEvent implements Event {
         RIGHT(39),
         DOWN(40),
 
+        // num pad
+        NUM_PLUS(107),
+        NUM_MINUS(109),
+
         SPACE(32),
         ENTER(10),
         ESCAPE(27),
