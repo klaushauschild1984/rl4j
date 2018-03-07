@@ -19,6 +19,7 @@ import com.rl4j.event.AwtMouseEventProducer;
 import com.rl4j.event.EventBus;
 import com.rl4j.event.Handler;
 import com.rl4j.event.SystemEventProducer;
+import com.rl4j.font.BitmapFont;
 import com.rl4j.ui.Cursor;
 import lombok.Builder;
 import lombok.Getter;

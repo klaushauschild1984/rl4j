@@ -14,6 +14,8 @@
  */
 package com.rl4j;
 
+import com.rl4j.font.BitmapFont;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;

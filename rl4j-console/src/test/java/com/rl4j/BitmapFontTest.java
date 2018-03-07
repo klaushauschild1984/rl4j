@@ -14,6 +14,7 @@
  */
 package com.rl4j;
 
+import com.rl4j.font.BitmapFont;
 import org.testng.annotations.Test;
 
 public class BitmapFontTest {
