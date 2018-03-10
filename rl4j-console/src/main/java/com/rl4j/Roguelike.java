@@ -159,19 +159,12 @@ public class Roguelike {
 
     private static class HiddenRoguelikeBuilder extends RoguelikeBuilder {
 
-        private static <T> T withDefault(final T value, final T defaultValue) {
-            if (value != null) {
-                return value;
-            }
-            return defaultValue;
-        }
-
         @Override
         public Roguelike build() {
             return new Roguelike( //
                     super.title, //
-                    withDefault(super.size, new Dimension(40, 30)), //
-                    withDefault(super.bitmapFont, BitmapFont.create(Roguelike.class.getResourceAsStream("font32x32.png"), new Dimension(32, 32))), //
+                    Values.withDefault(super.size, new Dimension(40, 30)), //
+                    Values.withDefault(super.bitmapFont, BitmapFont.create(Roguelike.class.getResourceAsStream("font32x32.png"), new Dimension(32, 32))), //
                     super.fpsLimit, //
                     super.borderless, //
                     super.nativeCursor //

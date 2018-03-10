@@ -51,7 +51,7 @@ public class Sprite extends BackBuffer implements Draw {
                 }
                 final Color background;
                 if (transparent) {
-                    background = console.getBackBuffer()[(top + row) * console.getSize().getWidth() + (left + column)].getBackground();
+                    background = console.get(left + column, top + row).getBackground();
                 } else {
                     background = character.getBackground();
                 }

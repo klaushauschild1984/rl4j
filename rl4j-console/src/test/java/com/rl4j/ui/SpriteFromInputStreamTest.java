@@ -12,20 +12,23 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
-package com.rl4j;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+package com.rl4j.ui;
 
-@RequiredArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
-public class Dimension {
+import com.rl4j.Dimension;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-    private final int width;
-    private final int height;
+import java.io.InputStream;
+
+public class SpriteFromInputStreamTest {
+
+    @Test
+    public void loadTest() {
+        final InputStream resource = getClass().getResourceAsStream("sprite.txt");
+        final Sprite sprite = SpriteFromInputStream.load(resource);
+
+        Assert.assertEquals(sprite.getSize(), new Dimension(3, 3));
+    }
 
 }

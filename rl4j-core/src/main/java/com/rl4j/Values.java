@@ -12,20 +12,18 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.rl4j;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+public enum Values {
 
-@RequiredArgsConstructor
-@Getter
-@ToString
-@EqualsAndHashCode
-public class Dimension {
+    ;
 
-    private final int width;
-    private final int height;
+    public static <T> T withDefault(final T value, final T defaultValue) {
+        if (value != null) {
+            return value;
+        }
+        return defaultValue;
+    }
 
 }

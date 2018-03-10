@@ -17,7 +17,6 @@ package com.rl4j;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import java.awt.Color;
@@ -29,10 +28,8 @@ public abstract class BackBuffer {
     @Getter
     private final Character[] backBuffer;
     @Getter
-    @Setter
     private Color foreground = Color.WHITE;
     @Getter
-    @Setter
     private Color background = Color.BLACK;
 
     public BackBuffer(final Dimension size) {
@@ -52,7 +49,7 @@ public abstract class BackBuffer {
         if (!contains(column, row)) {
             return;
         }
-        final Character character = new Character(c, foreground, background);
+        final Character character = new Character(c, Values.withDefault(foreground, this.foreground), Values.withDefault(background, this.background));
         backBuffer[row * size.getWidth() + column] = character;
     }
 
@@ -119,6 +116,20 @@ public abstract class BackBuffer {
             return false;
         }
         return true;
+    }
+
+    public void setForeground(final Color foreground) {
+        if (foreground == null) {
+            return;
+        }
+        this.foreground = foreground;
+    }
+
+    public void setBackground(final Color background) {
+        if (background == null) {
+            return;
+        }
+        this.background = background;
     }
 
     @RequiredArgsConstructor
