@@ -21,6 +21,10 @@ import com.rl4j.Draw;
 import lombok.Setter;
 
 import java.awt.Color;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 
 public class Sprite extends BackBuffer implements Draw {
 
@@ -58,6 +62,27 @@ public class Sprite extends BackBuffer implements Draw {
                 }
                 console.put(character.getC(), left + column, top + row, character.getForeground(), background);
             }
+        }
+    }
+
+    public void save(final OutputStream outputStream) {
+        try (final ObjectOutputStream objectOutputStream = new ObjectOutputStream(new BufferedOutputStream(outputStream))) {
+            // header
+            objectOutputStream.writeInt(getSize().getWidth());
+            objectOutputStream.writeInt(getSize().getHeight());
+            objectOutputStream.writeBoolean(transparent);
+
+            // body
+            for (final Character character : getBackBuffer()) {
+                objectOutputStream.writeChar(character.getC());
+                objectOutputStream.writeInt(character.getForeground().getRGB());
+                if (transparent) {
+                    continue;
+                }
+                objectOutputStream.writeInt(character.getBackground().getRGB());
+            }
+        } catch (final IOException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
