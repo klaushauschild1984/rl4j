@@ -16,7 +16,7 @@
 package com.rl4j.ui;
 
 import com.rl4j.BackBuffer;
-import com.rl4j.BackBuffer.Character;
+import com.rl4j.Character;
 import com.rl4j.Draw;
 import com.rl4j.Update;
 import com.rl4j.event.Event;

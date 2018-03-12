@@ -14,10 +14,7 @@
  */
 package com.rl4j;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
 import java.awt.Color;
 
@@ -130,18 +127,6 @@ public abstract class BackBuffer {
             return;
         }
         this.background = background;
-    }
-
-    @RequiredArgsConstructor
-    @Getter
-    @EqualsAndHashCode
-    @ToString
-    public static class Character {
-
-        private final char c;
-        private final Color foreground;
-        private final Color background;
-
     }
 
 }

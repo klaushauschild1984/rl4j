@@ -15,6 +15,7 @@
 package com.rl4j.ui;
 
 import com.rl4j.BackBuffer;
+import com.rl4j.Character;
 import com.rl4j.Dimension;
 import com.rl4j.Draw;
 import lombok.Setter;

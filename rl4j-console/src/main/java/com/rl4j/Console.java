@@ -15,11 +15,13 @@
 package com.rl4j;
 
 import com.rl4j.font.BitmapFont;
+import lombok.extern.slf4j.Slf4j;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.Objects;
 
+@Slf4j
 public class Console extends BackBuffer {
 
     private final BitmapFont bitmapFont;
@@ -39,27 +41,29 @@ public class Console extends BackBuffer {
     }
 
     void flush(final Graphics2D context) {
+        final long time = System.currentTimeMillis();
+        boolean changed = false;
+        final Graphics2D graphics = renderBuffer.createGraphics();
         for (int i = 0; i < getBackBuffer().length; i++) {
-            Character character = getBackBuffer()[i];
-
+            final Character character = getBackBuffer()[i];
             if (Objects.equals(frontBuffer[i], character)) {
                 continue;
             }
             frontBuffer[i] = character;
-
             final int x = i % getSize().getWidth();
             final int y = i / getSize().getWidth();
             bitmapFont.draw( //
-                    renderBuffer.createGraphics(), //
-                    character.getC(), //
+                    graphics, //
+                    character, //
                     x * bitmapFont.getTileSize().getWidth(), //
-                    y * bitmapFont.getTileSize().getHeight(), //
-                    character.getForeground(), //
-                    character.getBackground() //
+                    y * bitmapFont.getTileSize().getHeight() //
             );
+            changed = true;
         }
-
         context.drawImage(renderBuffer, null, 0, 0);
+        if (changed) {
+            log.debug("Render time: {}ms", System.currentTimeMillis() - time);
+        }
     }
 
 }

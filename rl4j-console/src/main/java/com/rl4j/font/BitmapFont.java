@@ -14,21 +14,26 @@
  */
 package com.rl4j.font;
 
+import com.rl4j.Character;
 import com.rl4j.Dimension;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import javax.imageio.ImageIO;
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 @RequiredArgsConstructor
 public class BitmapFont {
 
     private final CodePage437 codePage437 = new CodePage437();
+    private final Map<Character, BufferedImage> characters = new HashMap<>();
     private final BufferedImage bitmap;
+    @Getter
     private final Dimension tileSize;
 
     public static BitmapFont create(final InputStream inputStream, final Dimension tileSize) {
@@ -46,16 +51,23 @@ public class BitmapFont {
         }
     }
 
-    public Dimension getTileSize() {
-        return tileSize;
+    public void draw(final Graphics2D context, final Character character, final int x, final int y) {
+        final BufferedImage characterImage = drawCharacter(character);
+        context.drawImage(characterImage, x, y, null);
     }
 
-    public void draw(final Graphics2D context, final char c, final int x, final int y, final Color foreground, final Color background) {
-        final int index = codePage437.getOrDefault(c, (int) c);
-        final int w = index * tileSize.getWidth();
-        final int charX = w % bitmap.getWidth();
-        final int charY = (w / bitmap.getWidth()) * tileSize.getHeight();
-        context.drawImage(bitmap, new BitmapFontFilter(getTileSize(), charX, charY, foreground, background), x, y);
+    private BufferedImage drawCharacter(final Character character) {
+        if (!characters.containsKey(character)) {
+            final int index = codePage437.getOrDefault(character.getC(), (int) character.getC());
+            final int w = index * tileSize.getWidth();
+            final int charX = w % bitmap.getWidth();
+            final int charY = (w / bitmap.getWidth()) * tileSize.getHeight();
+            final BitmapFontFilter bitmapFontFilter = new BitmapFontFilter(tileSize, charX, charY, character.getForeground(), character.getBackground());
+            final BufferedImage characterImage = new BufferedImage(tileSize.getWidth(), tileSize.getHeight(), BufferedImage.TYPE_INT_RGB);
+            characterImage.createGraphics().drawImage(bitmap, bitmapFontFilter, 0, 0);
+            characters.put(character, characterImage);
+        }
+        return characters.get(character);
     }
 
 }
