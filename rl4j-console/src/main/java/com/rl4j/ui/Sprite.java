@@ -21,8 +21,11 @@ import com.rl4j.Draw;
 import lombok.Setter;
 
 import java.awt.Color;
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 
@@ -43,6 +46,33 @@ public class Sprite extends BackBuffer implements Draw {
         this.top = top;
         this.left = left;
         this.transparent = transparent;
+    }
+
+    public Sprite(final InputStream inputStream) throws IOException {
+        this(new ObjectInputStream(new BufferedInputStream(inputStream)));
+    }
+
+    private Sprite(final ObjectInputStream objectInputStream) throws IOException {
+        this(0, 0, readSize(objectInputStream), readTransparent(objectInputStream));
+        for (int i = 0; i < getSize().getWidth() * getSize().getHeight(); i++) {
+            final char c = objectInputStream.readChar();
+            final Color foreground = new Color(objectInputStream.readInt());
+            Color background = null;
+            if (!transparent) {
+                background = new Color(objectInputStream.readInt());
+            }
+            getBackBuffer()[i] = new Character(c, foreground, background);
+        }
+    }
+
+    private static Dimension readSize(final ObjectInputStream objectInputStream) throws IOException {
+        final int width = objectInputStream.readInt();
+        final int height = objectInputStream.readInt();
+        return new Dimension(width, height);
+    }
+
+    private static boolean readTransparent(final ObjectInputStream objectInputStream) throws IOException {
+        return objectInputStream.readBoolean();
     }
 
     @Override
