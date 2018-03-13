@@ -17,5 +17,5 @@ package com.rl4j;
 
 import com.rl4j.event.Handler;
 
-public interface Game extends Update, Draw, Handler {
+public interface GameObject extends Update, Draw, Handler {
 }

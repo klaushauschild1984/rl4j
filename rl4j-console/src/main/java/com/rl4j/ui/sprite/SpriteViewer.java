@@ -13,10 +13,10 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.rl4j.ui;
+package com.rl4j.ui.sprite;
 
 import com.rl4j.BackBuffer;
-import com.rl4j.Game;
+import com.rl4j.GameObject;
 import com.rl4j.Roguelike;
 import com.rl4j.event.Event;
 
@@ -41,7 +41,7 @@ public class SpriteViewer {
                 .nativeCursor(false) //
                 .size(sprite.getSize()) //
                 .build();
-        spriteViewer.start(new Game() {
+        spriteViewer.start(new GameObject() {
 
             @Override
             public void draw(final BackBuffer console) {

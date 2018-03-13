@@ -66,7 +66,7 @@ public class Roguelike {
         return new HiddenRoguelikeBuilder();
     }
 
-    public void start(final Game game) {
+    public void start(final GameObject game) {
         start(game, game, game);
     }
 

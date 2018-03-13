@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with this program. If
  * not, see <http://www.gnu.org/licenses/>.
  */
-package com.rl4j.ui;
+package com.rl4j.ui.sprite;
 
 import com.rl4j.BackBuffer;
 import com.rl4j.Draw;

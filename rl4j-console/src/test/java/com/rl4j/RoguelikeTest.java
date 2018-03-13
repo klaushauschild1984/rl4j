@@ -18,9 +18,9 @@ import com.rl4j.event.Event;
 import com.rl4j.event.KeyboardEvent;
 import com.rl4j.event.KeyboardEvent.Key;
 import com.rl4j.event.MouseEvent.MouseButtonEvent;
-import com.rl4j.ui.Animation;
 import com.rl4j.ui.Box;
-import com.rl4j.ui.Sprite;
+import com.rl4j.ui.sprite.Animation;
+import com.rl4j.ui.sprite.Sprite;
 
 import java.awt.Color;
 import java.util.AbstractMap.SimpleEntry;
@@ -39,7 +39,7 @@ public class RoguelikeTest {
         roguelike.start(test);
     }
 
-    private static class Test implements Game {
+    private static class Test implements GameObject {
 
         private final Box box;
         private final Animation animation;

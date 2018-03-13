@@ -13,7 +13,7 @@
  * not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.rl4j.ui;
+package com.rl4j.ui.sprite;
 
 import com.rl4j.Dimension;
 
