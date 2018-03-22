@@ -49,9 +49,9 @@ public class RoguelikeTest {
 
         public Test(final Roguelike roguelike) {
             this.roguelike = roguelike;
-            box = new Box(0, 0, roguelike.getSize().getWidth(), roguelike.getSize().getHeight());
-            box.setTitle("Roguelikes 4 Java");
-            box.setFill(false);
+            box = new Box(0, 0, roguelike.getSize().getWidth(), roguelike.getSize().getHeight()) //
+                    .withTitle("Roguelikes 4 Java") //
+                    .withFill(false);
 
             final Sprite sprite0 = new Sprite(2, 2, new Dimension(3, 3));
             sprite0.put("###", 0, 0, Color.RED);

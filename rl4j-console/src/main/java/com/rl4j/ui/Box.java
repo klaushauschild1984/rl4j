@@ -36,7 +36,6 @@ public class Box implements Draw {
     @Setter
     private String sliceNine = "╔═╗║ ║╚═╝";
     private String title;
-    @Setter
     private boolean fill = true;
 
     @Override
@@ -79,8 +78,14 @@ public class Box implements Draw {
         }
     }
 
-    public void setTitle(final String title) {
+    public Box withTitle(final String title) {
         this.title = title.substring(0, Math.min(width - 2, title.length()));
+        return this;
+    }
+
+    public Box withFill(final boolean fill) {
+        this.fill = fill;
+        return this;
     }
 
 }

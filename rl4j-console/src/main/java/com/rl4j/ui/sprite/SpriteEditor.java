@@ -32,7 +32,7 @@ import java.util.stream.IntStream;
 
 public class SpriteEditor implements GameObject {
 
-    private final Box toolsBox = new Box(0, 0, 18, 30);
+    private final Box toolsBox = new Box(0, 0, 18, 30).withTitle("Tools");
     private final CodePage437 codePage437 = new CodePage437();
 
     private Integer highlightedIndex;
@@ -51,10 +51,6 @@ public class SpriteEditor implements GameObject {
     private boolean decrementBackgroundBlue;
     private Color foreground = Color.WHITE;
     private Color background = Color.BLACK;
-
-    public SpriteEditor() {
-        toolsBox.setTitle("Tools");
-    }
 
     public static void main(final String[] args) {
         final Roguelike spriteEditor = Roguelike.builder() //
