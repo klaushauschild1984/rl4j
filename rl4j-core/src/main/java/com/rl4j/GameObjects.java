@@ -1,0 +1,49 @@
+/*
+ * Roguelikes 4 Java Copyright (C) 2018 Klaus Hauschild
+ *
+ * This program is free software: you can redistribute it and/or modify it under the terms of the
+ * GNU General Public License as published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+ * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License along with this program. If
+ * not, see <http://www.gnu.org/licenses/>.
+ */
+
+package com.rl4j;
+
+import com.rl4j.event.Event;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GameObjects<T extends GameObject> implements GameObject {
+
+    private final List<T> gameObjects = new ArrayList<>();
+
+    public void add(final T gameObject) {
+        gameObjects.add(gameObject);
+    }
+
+    @Override
+    public void draw(final BackBuffer console) {
+        gameObjects //
+                .forEach(gameObject -> gameObject.draw(console));
+    }
+
+    @Override
+    public void update(final float elapsed) {
+        gameObjects //
+                .forEach(gameObject -> gameObject.update(elapsed));
+    }
+
+    @Override
+    public void handle(final Event event) {
+        gameObjects //
+                .forEach(gameObject -> gameObject.handle(event));
+    }
+
+}
